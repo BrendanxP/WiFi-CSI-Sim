@@ -3,7 +3,7 @@ WiFi-CSI Bearing Estimation and Localization in Multi-Robot Systems: An Open-Sou
 
 The framework handles the ROS setup, spawning robots at desired positions (and height), designing trajectories and experimental setups, simulating the CSI signal behavior in real-time, and integration with applications usch as signal AoA profile generation, bearing estimation and localization. Moreover, it can easily be expanded and adapted to fit the users needs.
 
-The simulation framework relies on MATLAB with Gazebo and ROS. The framework can be run on a single Linux machine, or can be distributed over two PC's where the Gazebo simulator requires a Linux environment and the Controller software with MATLAB can be deployed on either Linux or Windows. The most logical options are as follows, where we prefer option 1 combining the strengths of Linux and Windows.
+The simulation framework relies on MATLAB with Gazebo and ROS. The framework can be run on a single Linux machine, or can be distributed over two PC's where the Gazebo simulator requires a Linux environment and the Controller software with MATLAB can be deployed on either Linux or Windows. The most logical options are as follows, where we prefer option 1 combining the strengths of Linux and Windows:
 1. Gazebo simulator (PC1: Linux) + Controller (PC2: Linux/Windows)
 2. Gazebo simulator (PC1: Linux) + Contoller (PC1: Linux)
 3. Gazebo simulator (PC1: VM Linux) + Controller (PC1: Windows)
