@@ -35,7 +35,9 @@ With the Gazebo simulator setup properly, the Live Script in MATLAB can be confi
 2. Select the robot files of your chosing, the amount of robots, their spawn location and MAC address identiefier. Once run, the robots should spawn 1 by 1 into the world.
 
 Everything up and untill here only needs to be run once to be able to do repeated experiments using the confgured layout of the robots.
+
 3. This step involves most control options in the MATLAB Live Script. Here, the experiment duration, robot trajectories, communications links, signal properties (Channel, Number of subcarriers, SNR, CFO), and more can be configured with easy configurable toggles. When everything is set, you can hit run and on the section and the single experiment will start. 
 4. After the experiment completes a directory can be selected where the results can be written to. This includes figures on carrier signal, the driven odometries, AoA profiles for each connection, and a localization overview. 
+5. Alternatively a Monte Carlo setup is made which automatically runs an X number of repetitions and swiftly processes the bulk results into results and insights.
 
-5. Alternatively a Monte Carlo setup is made which automatically runs an X number of repetitions
+The framework includes the required backbone which can easily be adapted or upgraded to fit to specific purposes and goals.
