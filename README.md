@@ -16,7 +16,7 @@ Gazebo simulator (Linux) _(can be the same device as the Controller (linux) or a
 ROS1 Noetic with Gazebo installed on Ubuntu 20.04 (tested with ROS1 Noetic, slight adaptations could theoretically make it work with ROS2 but this has yet to be tested).
 Catkin workspace with the required robotic platforms loaded and GAZEBO_MODEL_PATH, ROS_PACKAGE_PATH and GAZEBO_PLUGIN_PATH properly set in .bashrc, corresponding to the requirements of the robotic platform, 
 The robotic platforms tested inlcude the following, but it should allow for any robot that can be spawned using SDF or URDF:
-- Turtlebot3 https://github.com/ROBOTIS-GIT/turtlebot3
+- Turtlebot3 Waffle Pi https://github.com/ROBOTIS-GIT/turtlebot3
 - Nexus 4WD Mecanum https://github.com/RBinsonB/nexus_4wd_mecanum_simulator 
 
 Controller (Windows/Linux) _(can be the same device as the Gazebo simulator)_:
