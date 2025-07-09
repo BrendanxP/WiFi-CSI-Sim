@@ -1,14 +1,21 @@
 # WiFi-CSI-Sim
 WiFi-CSI Bearing Estimation and Localization in Multi-Robot Systems: An Open-Source Simulation Framework
 
-The simulation framework relies on MATLAB with Gazebo and ROS. The framework can be run on a single Linux machine, or can be distributed over a Linux based Gazebo simulator and a Windows or Linux controlling node running MALTAB. All configuration settings are performed in the MALTAB Live Script MRS25.m, including the details to setup the connection to Gazebo.
+The framework handles the ROS setup, spawning robots at desired positions (and height), designing trajectories and experimental setups, simulating the CSI signal behavior in real-time, and integration with applications usch as signal AoA profile generation, bearing estimation and localization. Moreover, it can easily be expanded and adapted to fit the users needs.
+
+The simulation framework relies on MATLAB with Gazebo and ROS. The framework can be run on a single Linux machine, or can be distributed over two PC's where the Gazebo simulator requires a Linux environment and the Controller software with MATLAB can be deployed on either Linux or Windows. 
+1. Gazebo simulator (PC1: Linux) + Controller (PC2: Linux/Windows)
+2. Gazebo simulator (PC1: Linux) + Contoller (PC1: Linux)
+3. Gazebo simulator (PC1: VM Linux) + Controller (PC1: Windows)
+
+All configuration settings are performed in the MALTAB Live Script MRS25.m, including the details to setup the connection to Gazebo, which are further elaborated on below at **Set-up steps**.
 
 
 **Prerequisites**
 Gazebo simulator (Linux) _(can be the same device as the Controller (linux) or a VM on the Controller (Windows))_:
-ROS1 with Gazebo installed (tested with ROS1 Noetic, slight adaptations could theoretically make it work with ROS2 but this has yet to be tested).
+ROS1 Noetic with Gazebo installed on Ubuntu 20.04 (tested with ROS1 Noetic, slight adaptations could theoretically make it work with ROS2 but this has yet to be tested).
 Catkin workspace with the required robotic platforms loaded and GAZEBO_MODEL_PATH, ROS_PACKAGE_PATH and GAZEBO_PLUGIN_PATH properly set in .bashrc, corresponding to the requirements of the robotic platform, 
-The robots tested with inlcude the following, but it should allow for any robot that can be spawned using SDF or URDF:
+The robotic platforms tested inlcude the following, but it should allow for any robot that can be spawned using SDF or URDF:
 - Turtlebot3 https://github.com/ROBOTIS-GIT/turtlebot3
 - Nexus 4WD Mecanum https://github.com/RBinsonB/nexus_4wd_mecanum_simulator 
 
