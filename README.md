@@ -33,12 +33,108 @@ Controller (Windows/Linux) _(can be the same device as the Gazebo simulator)_:
 
 Gazebo simulator:
 
-1. First have all prerequisites installed and the proper bashrc set regarding the ROBOTIC PLATFORM, otherwise robots will not spawn properly (missing graphics and/or controller plugins).
+1. First have all prerequisites installed and the proper bashrc set regarding the ROBOTIC PLATFORM, otherwise robots will not spawn properly (missing graphics and/or controller plugins). Similarly, setup the Custom CSI ROS message as shown below.
 2. Make sure the Gazebo simulator and Controller are on the same network and find the IPs.
 3. Using these IP's set the ROS_IP, ROS_HOSTNAME, and ROS_MASTER_URI accordingly in the bashrc on the Gazebo simulator. You can opt to run the ROS Core on the Gazebo simulator (manually start in a terminal window) or on the Controller where it is togglable in the MALTAB Live script along with fields to set the IPs in here.
 4. Using a second terminal on the Gazebo simulator, one can start Gazebo with or without UI depending on the requirements. Here, any world (without robots) can be launched, but to get a simple empty world the following commands can be run:
 - rosrun gazebo_ros gazebo (empty world, connected to ROS, with GUI)
 - roslaunch gazebo_ros empty_world.launch gui:=false (empty world, connected to ROS, no GUI)
+
+Gazebo Simulator (custom ROS message for CSI)
+## Creating the `csi_msgs` Custom Message Package for ROS
+
+Below is a concise, copy-ready overview to include in your Github instructions. This guides users in setting up the `csi_msgs` package for custom CSI messages, without affecting other packages in the workspace.
+
+### 1. Create the ROS Package
+
+From your workspace source folder:
+```bash
+cd ~/catkin_ws/src
+catkin_create_pkg csi_msgs std_msgs message_generation
+cd csi_msgs
+```
+
+### 2. Define Custom Messages
+
+Make a `msg/` directory if it does not exist:
+```bash
+mkdir msg
+```
+
+In `msg/`, create two files:
+
+**CsiForNode.msg**
+```msg
+string target_node
+uint32 packet_number
+std_msgs/Float64MultiArray csi_data
+```
+
+**CsiBundle.msg**
+```msg
+csi_msgs/CsiForNode[] bundle
+```
+
+### 3. Edit CMakeLists.txt
+
+Ensure these sections are included and properly set:
+
+```cmake
+find_package(catkin REQUIRED COMPONENTS
+  std_msgs
+  message_generation
+)
+add_message_files(
+  FILES
+  CsiForNode.msg
+  CsiBundle.msg
+)
+generate_messages(
+  DEPENDENCIES
+  std_msgs
+)
+catkin_package(
+  CATKIN_DEPENDS message_runtime std_msgs
+)
+```
+
+### 4. Edit package.xml
+
+Add or confirm the following dependencies inside ``:
+
+```xml
+message_generation
+message_runtime
+std_msgs
+std_msgs
+```
+
+### 5. Build the Package
+
+Return to your workspace root, then build:
+```bash
+cd ~/catkin_ws
+catkin_make
+```
+
+### 6. Source the Workspace
+
+After building, source your workspace setup script:
+```bash
+source ~/catkin_ws/devel/setup.bash
+```
+
+_Optional:_ Add this command to your `~/.bashrc` to automate sourcing.
+
+### 7. Verify the Messages
+
+Check that your new messages are available:
+
+```bash
+rosmsg show csi_msgs/CsiForNode
+rosmsg show csi_msgs/CsiBundle
+```
+
 
 MATLAB Controller:
 
