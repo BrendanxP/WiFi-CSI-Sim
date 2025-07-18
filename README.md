@@ -139,10 +139,23 @@ rosmsg show csi_msgs/CsiBundle
 ```
 
 -> On MATLAB Controller (only required if using Windows)
-1. Copy the csi_msgs folder from Ubuntu to your Windows device.
+1. Copy the csi_msgs folder from Ubuntu to your Windows device. I ran into issues when stored in a OneDrive synced folder.
 2. run ``rosgenmsg("C:\the-parent-folder-of-csi_msgs")``
 3. If you encounter an error about compilation make sure to have the VScode compiler installed: https://visualstudio.microsoft.com/vs/community/ . Select "Desktop development with C++" workload. After installation run ``mex -setup cpp``.
 
+4. Add the custom message folder to the MATLAB path by executing:
+ 
+``addpath('C:\matlab_msg_gen_ros1\win64\install\m')
+savepath``
+ 
+5. Refresh all message class definitions, which requires clearing the workspace, by executing:
+
+``clear classes
+rehash toolboxcache``
+ 
+6. Verify that you can use the custom messages. 
+   Enter "rosmsg list" and ensure that the output contains the generated
+   custom message types.
 
 MATLAB Controller:
 
