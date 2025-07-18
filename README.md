@@ -40,7 +40,10 @@ Gazebo simulator:
 - rosrun gazebo_ros gazebo (empty world, connected to ROS, with GUI)
 - roslaunch gazebo_ros empty_world.launch gui:=false (empty world, connected to ROS, no GUI)
 
-Gazebo Simulator (custom ROS message for CSI)
+Custom CSI ROS messages:
+
+-> On Gazebo Simulator
+
 ## Creating the `csi_msgs` Custom Message Package for ROS
 
 Below is a concise, copy-ready overview to include in your Github instructions. This guides users in setting up the `csi_msgs` package for custom CSI messages, without affecting other packages in the workspace.
@@ -134,6 +137,11 @@ Check that your new messages are available:
 rosmsg show csi_msgs/CsiForNode
 rosmsg show csi_msgs/CsiBundle
 ```
+
+-> On MATLAB Controller (only required if using Windows)
+1. Copy the csi_msgs folder from Ubuntu to your Windows device.
+2. run ``rosgenmsg("C:\the-parent-folder-of-csi_msgs")``
+3. If you encounter an error about compilation make sure to have the VScode compiler installed: https://visualstudio.microsoft.com/vs/community/ . Select "Desktop development with C++" workload. After installation run ``mex -setup cpp``.
 
 
 MATLAB Controller:
