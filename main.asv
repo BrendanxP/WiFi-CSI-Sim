@@ -1,13 +1,13 @@
 %[text] # WiFi-CSI Simulation Framework V13-04-2026
 %[text] ## Function for Monte Carlo experiments
 %[text] comment this out including the final section for single operation
-function [AoA_est_odom, AoA_error_odom, AoA_true, AoA_est_pose, AoA_error_pose, ...
-          p_error_odom, p_est_odom, p_true, p_error_pose, p_est_pose, ...
-          drift_x, drift_y] = main()
+% function [AoA_est_odom, AoA_error_odom, AoA_true, AoA_est_pose, AoA_error_pose, ...
+%           p_error_odom, p_est_odom, p_true, p_error_pose, p_est_pose, ...
+%           drift_x, drift_y] = main()
 %%
 %[text] ## Clear, Close and Kill ROS/GZ
   %[control:button:61bf]{"position":[1,2]}
-restartSim(1); % Confirm in chat to prevent accidental data-loss
+restartSim(1); % Confirm in chat to prevent accidental data-loss %[output:97d0142a]
 %%
 %[text] ## Initialize ROS in MATLAB
 %[text] Define node IPs and select ROS Core location.
@@ -25,9 +25,9 @@ switch conf.RosVersion
     % Settings for ROS2 only
     case "jazzy"
     conf.manualTerminals = false; % Enable to manually open required terminals %[control:checkbox:4c03]{"position":[28,33]}
-    conf.gzWorld =      "empNoGUI"; %[control:dropdown:201e]{"position":[25,35]}
+    conf.gzWorld =      "empGUI"; %[control:dropdown:201e]{"position":[25,33]}
 end
-[master, gzPids] = initROS(conf);
+[master, gzPids] = initROS(conf); %[output:098c8906]
 %%
 %[text] ## Bridging service
   %[control:button:4f52]{"position":[1,2]}
@@ -129,7 +129,7 @@ MAC = { ...
 
 
 % Spawn Nexus Robots in Gazebo
-[rosSub,rosPub,msgPub,rosNS,spawnOrder]=rosSpawn(xml_path,numR,cell2mat(posStart),platformWidth,conf.RosVersion,master,worldName);
+[rosSub,rosPub,msgPub,rosNS,spawnOrder]=rosSpawn(xml_path,numR,cell2mat(posStart),platformWidth,conf.RosVersion,master,worldName); %[output:8237868a]
 [R.rosSub] = rosSub{:};     clearvars rosSub;
 [R.rosPub] = rosPub{:};     clearvars rosPub;
 [R.msgPub] = msgPub{:};     clearvars msgPub;
@@ -275,7 +275,7 @@ traj.VelocityRot = { ...
     0.02; % R2 %[control:editfield:27ea]{"position":[5,9]}
     0; % R3 %[control:editfield:1890]{"position":[5,6]}
     0.2; % R4 %[control:editfield:6b17]{"position":[5,8]}
-    0.2; % R5 %[control:editfield:2e35]{"position":[5,8]}
+    -0.2; % R5 %[control:editfield:2e35]{"position":[5,9]}
     0; % R6 %[control:editfield:5ad3]{"position":[5,6]}
     0; % R7 %[control:editfield:449c]{"position":[5,6]}
     0; % R8 %[control:editfield:35f4]{"position":[5,6]}
@@ -289,7 +289,7 @@ traj.VelocityLin  = { ...
     0.002; % R2 %[control:editfield:6bb0]{"position":[5,10]}
     0; % R3 %[control:editfield:6d07]{"position":[5,6]}
     -0.04; % R4 %[control:editfield:00ff]{"position":[5,10]}
-    -0.04; % R5 %[control:editfield:405f]{"position":[5,10]}
+    0.04; % R5 %[control:editfield:405f]{"position":[5,9]}
     0; % R6 %[control:editfield:7ee9]{"position":[5,6]}
     0; % R7 %[control:editfield:591c]{"position":[5,6]}
     0; % R8 %[control:editfield:10f6]{"position":[5,6]}
@@ -326,7 +326,7 @@ postExperiment(simCtrl,conf.RosVersion)
 
 % Determing average Hz from the iteration
 runTime = seconds(R(1).odomT.Time(end) - R(1).odomT.Time(1)); % duration in sec
-fprintf("average Hz is %.2f\n", (numel(R(1).odomT))/runTime)
+fprintf("average Hz is %.2f\n", (numel(R(1).odomT))/runTime) %[output:5e606588]
 %%
 %[text] ## Visualize and Analyze Results (Bartlett Estimation)
   %[control:button:6854]{"position":[1,2]}
@@ -488,8 +488,8 @@ for i=find(receivers)
         end
     end
 end
-AoA_error_all_odom = wrapTo180(AoA_est_all_odom - AoA_true_all)
-AoA_error_all_pose = wrapTo180(AoA_est_all_pose - AoA_true_all)
+AoA_error_all_odom = wrapTo180(AoA_est_all_odom - AoA_true_all) %[output:9315fd2b]
+AoA_error_all_pose = wrapTo180(AoA_est_all_pose - AoA_true_all) %[output:66780bf5]
 
 % reduce to only receiver-transmitter pairs
 AoA_true = AoA_true_all(receivers,transmitters);
@@ -500,9 +500,9 @@ AoA_error_pose = wrapTo180(AoA_est_pose - AoA_true);
 
 % Call function
 [p_error_odom, p_est_odom, p_true, p_transmitters, p_results_lists_odom] = localizeAndPlot(R, bearingPos, receivers, transmitters, AoA_est_all_odom);
-p_error_odom
+p_error_odom %[output:968751d9]
 [p_error_pose, p_est_pose, ~, ~, p_results_lists_pose] = localizeAndPlot(R, bearingPos, receivers, transmitters, AoA_est_all_pose);
-p_error_pose
+p_error_pose %[output:0d0aab20]
 
 % Metric for odom drift error
 j = 1;
@@ -559,14 +559,17 @@ end
 beep
 %%
 %[text] ## End of Monte Carlo Experiments
-    % Try to remove GZ world piecefully
-    call(simCtrl.client, simCtrl.resetWorld)
-
-    % Kill programs based on opened PIDs
-    killSystemCmd([gzPids,bridgePids])
-end
+%     % Try to remove GZ world piecefully
+%     call(simCtrl.client, simCtrl.resetWorld)
+% 
+%     % Kill programs based on opened PIDs
+%     killSystemCmd([gzPids,bridgePids])
+% end
 
 %[appendix]{"version":"1.0"}
+%---
+%[metadata:view]
+%   data: {"layout":"onright"}
 %---
 %[control:button:61bf]
 %   data: {"label":"Run","run":"Section"}
@@ -1275,4 +1278,28 @@ end
 %---
 %[control:filebrowser:5a24]
 %   data: {"browserType":"Folder","defaultValue":"\"\"","label":"","run":"Nothing"}
+%---
+%[output:97d0142a]
+%   data: {"dataType":"text","outputData":{"text":"pkill -f \"gz sim\" 2>\/dev\/null: Terminated\npkill -f \"ros_gz_bridge\" 2>\/dev\/null: Terminated\npkill -f \"gz launch\" 2>\/dev\/null: Terminated\npkill -f \"gz transport\" 2>\/dev\/null: Terminated\npkill -f \"gz.*server\" 2>\/dev\/null: Terminated\npkill -f \"gz\" 2>\/dev\/null: Terminated\npkill -f \"ros2 launch.*gz\" 2>\/dev\/null: Terminated\n","truncated":false}}
+%---
+%[output:098c8906]
+%   data: {"dataType":"text","outputData":{"text":"\/matlab\n\/parameter_events\n\/rosout\n","truncated":false}}
+%---
+%[output:8237868a]
+%   data: {"dataType":"text","outputData":{"text":"Spawn success pedestal_robot1\nSpawn success robot1\nSpawn success pedestal_robot2\nSpawn success robot2\nSpawn success pedestal_robot3\nSpawn success robot3\nSpawn success pedestal_robot4\nSpawn success robot4\nSpawn success pedestal_robot5\nSpawn success robot5\nSpawn success pedestal_robot6\nSpawn success robot6\n","truncated":false}}
+%---
+%[output:5e606588]
+%   data: {"dataType":"text","outputData":{"text":"average Hz is 60.48\n","truncated":false}}
+%---
+%[output:9315fd2b]
+%   data: {"dataType":"matrix","outputData":{"columns":6,"name":"AoA_error_all_odom","rows":6,"type":"double","value":[["NaN","NaN","NaN","NaN","NaN","NaN"],["NaN","NaN","NaN","NaN","NaN","NaN"],["NaN","NaN","NaN","NaN","NaN","NaN"],["-0.8544","1.6663","1.1380","NaN","NaN","1.0828"],["1.8426","-0.8660","-0.5373","NaN","NaN","-1.5800"],["NaN","NaN","NaN","NaN","NaN","NaN"]]}}
+%---
+%[output:66780bf5]
+%   data: {"dataType":"matrix","outputData":{"columns":6,"name":"AoA_error_all_pose","rows":6,"type":"double","value":[["NaN","NaN","NaN","NaN","NaN","NaN"],["NaN","NaN","NaN","NaN","NaN","NaN"],["NaN","NaN","NaN","NaN","NaN","NaN"],["0.1483","-0.3392","0.1352","NaN","NaN","0.0800"],["-0.1630","0.1368","0.4655","NaN","NaN","-0.5772"],["NaN","NaN","NaN","NaN","NaN","NaN"]]}}
+%---
+%[output:968751d9]
+%   data: {"dataType":"matrix","outputData":{"columns":1,"name":"p_error_odom","rows":2,"type":"double","value":[["0.1788"],["0.0621"]]}}
+%---
+%[output:0d0aab20]
+%   data: {"dataType":"matrix","outputData":{"columns":1,"name":"p_error_pose","rows":2,"type":"double","value":[["0.0196"],["0.0306"]]}}
 %---

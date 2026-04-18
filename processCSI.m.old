@@ -1,0 +1,76 @@
+function CSI = processCSI(CSI_i, CSI_j, odom_i, MAC_i, MAC_j, movingWindow)
+
+    if ~exist("plotVisible","var")
+        plotVisible = 'on'; % default to show
+    end
+
+    %% Process CSI data to filter on node, moving window and matching pairs
+    CSI_i = filterMAC(CSI_i, MAC_j);           % Filter CSI data on other node's MAC
+    CSI_i = filterWindow(CSI_i, movingWindow); % CSI data within moving window
+    CSI_i = CSI_i(:,["itr","CSI"]);            % Remove redundant data
+    CSI_i = renamevars(CSI_i,"CSI","CSI_i");   % Rename for merging
+    
+    CSI_j = filterMAC(CSI_j, MAC_i);           % Filter CSI data on other node's MAC
+    CSI_j = filterWindow(CSI_j, movingWindow); % CSI data within moving window
+    CSI_j = CSI_j(:,["itr","CSI"]);            % Remove redundant data
+    CSI_j = renamevars(CSI_j,"CSI","CSI_i");   % Rename for merging
+
+    if isempty(CSI_i) || isempty(CSI_j)
+        CSI_ij = [];
+        return; % Exit the function if either CSI_i or CSI_j is empty
+    end
+    
+    CSI_j = timetable2table(CSI_j); % Only left join table can remain as timetable and keep datetime info
+    
+    % Inner join to only keep matching pairs and keep datetime of node i
+    CSI_ij = innerjoin(CSI_i,CSI_j,"Keys",["itr","itr"]);
+    
+    %% Process odom data to match CSI
+    odom_i = retime(odom_i,CSI_ij.Time,'linear');      % interpolated odom to CSI timestamps
+    odom_i = renamevars(odom_i,["pos_x","pos_y","pos_z","quat_x","quat_y","quat_z","quat_w"], ...
+        ["pos_xi","pos_yi","pos_zi","quat_xi","quat_yi","quat_zi","quat_wi"]); % rename for merging
+    CSI_ij = [CSI_ij,odom_i];                                                % merge with CSI data
+    
+    % Convert to Euler angles (ZYX order)
+    eul = quat2eul([CSI_ij.quat_wi, CSI_ij.quat_xi, ...
+        CSI_ij.quat_yi, CSI_ij.quat_zi], "ZYX");
+    
+    % Assign to CSI_ij
+    CSI_ij.eul_zi = eul(:,1);
+    CSI_ij.eul_yi = eul(:,2);
+    CSI_ij.eul_xi = eul(:,3);
+    
+                   
+    % Define interpolation function for a single CSI array
+    interpolateCSI = @(csi) (...
+        mean(abs(csi(floor(numel(csi)/2):ceil(numel(csi)/2)))) * ...                     % Average magnitude
+        exp(1i * polyval(polyfit(1:numel(csi), unwrap(angle(csi)), 1), (numel(csi)+1)/2)) ... % Phase
+    );
+    
+    % Process timetable in one step
+    CSI_ij(:,["CSI_int_i","CSI_int_j"]) = rowfun(...
+        @(csi_i, csi_j) deal(...
+            interpolateCSI(csi_i), ...  % CSI_int_i
+            interpolateCSI(csi_j) ...   % CSI_int_j
+        ), ...
+        CSI_ij, ...
+        'InputVariables', {'CSI_i', 'CSI_j'}, ...
+        'OutputVariableNames', {'CSI_int_i', 'CSI_int_j'}, ...
+        'ExtractCellContents', true ... % Required if CSI_i/j are cell arrays
+    );
+    
+    %%% Cancel CFO
+    CSI(:,"CSI_cfo") = rowfun(@(i,j) i*j, CSI_ij, ...  % Multiply CSI_int_i and CSI_int_j
+        'InputVariables', {'CSI_int_i', 'CSI_int_j'}, ...
+        'OutputVariableName', 'CSI_cfo');
+end
+
+function outTable = filterMAC(inTable, MAC)
+% Filter the CSI data based on MAC addresses
+    outTable = inTable(strcmp(inTable.MAC, MAC), :);
+end
+
+function outTable = filterWindow(inTable, window);
+    % Define the output table structure for filtered data
+    outTable = inTable(max(1, height(inTable) - window):end, :);
+end
