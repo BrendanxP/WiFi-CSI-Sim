@@ -1,0 +1,46 @@
+{
+  "type_description_msg": {
+    "type_description": {
+      "type_name": "ros_gz_interfaces/msg/WorldReset",
+      "fields": [
+        {
+          "name": "all",
+          "type": {
+            "type_id": 15,
+            "capacity": 0,
+            "string_capacity": 0,
+            "nested_type_name": ""
+          },
+          "default_value": "False"
+        },
+        {
+          "name": "time_only",
+          "type": {
+            "type_id": 15,
+            "capacity": 0,
+            "string_capacity": 0,
+            "nested_type_name": ""
+          },
+          "default_value": "False"
+        },
+        {
+          "name": "model_only",
+          "type": {
+            "type_id": 15,
+            "capacity": 0,
+            "string_capacity": 0,
+            "nested_type_name": ""
+          },
+          "default_value": "False"
+        }
+      ]
+    },
+    "referenced_type_descriptions": []
+  },
+  "type_hashes": [
+    {
+      "type_name": "ros_gz_interfaces/msg/WorldReset",
+      "hash_string": "RIHS01_3c89a38589db6e493cc132aa44b69ac7f49c9ffc0770f51883500da1f5b4275e"
+    }
+  ]
+}
