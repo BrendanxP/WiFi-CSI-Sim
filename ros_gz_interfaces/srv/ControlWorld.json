@@ -1,0 +1,310 @@
+{
+  "type_description_msg": {
+    "type_description": {
+      "type_name": "ros_gz_interfaces/srv/ControlWorld",
+      "fields": [
+        {
+          "name": "request_message",
+          "type": {
+            "type_id": 1,
+            "capacity": 0,
+            "string_capacity": 0,
+            "nested_type_name": "ros_gz_interfaces/srv/ControlWorld_Request"
+          },
+          "default_value": ""
+        },
+        {
+          "name": "response_message",
+          "type": {
+            "type_id": 1,
+            "capacity": 0,
+            "string_capacity": 0,
+            "nested_type_name": "ros_gz_interfaces/srv/ControlWorld_Response"
+          },
+          "default_value": ""
+        },
+        {
+          "name": "event_message",
+          "type": {
+            "type_id": 1,
+            "capacity": 0,
+            "string_capacity": 0,
+            "nested_type_name": "ros_gz_interfaces/srv/ControlWorld_Event"
+          },
+          "default_value": ""
+        }
+      ]
+    },
+    "referenced_type_descriptions": [
+      {
+        "type_name": "builtin_interfaces/msg/Time",
+        "fields": [
+          {
+            "name": "sec",
+            "type": {
+              "type_id": 6,
+              "capacity": 0,
+              "string_capacity": 0,
+              "nested_type_name": ""
+            },
+            "default_value": ""
+          },
+          {
+            "name": "nanosec",
+            "type": {
+              "type_id": 7,
+              "capacity": 0,
+              "string_capacity": 0,
+              "nested_type_name": ""
+            },
+            "default_value": ""
+          }
+        ]
+      },
+      {
+        "type_name": "ros_gz_interfaces/msg/WorldControl",
+        "fields": [
+          {
+            "name": "pause",
+            "type": {
+              "type_id": 15,
+              "capacity": 0,
+              "string_capacity": 0,
+              "nested_type_name": ""
+            },
+            "default_value": ""
+          },
+          {
+            "name": "step",
+            "type": {
+              "type_id": 15,
+              "capacity": 0,
+              "string_capacity": 0,
+              "nested_type_name": ""
+            },
+            "default_value": ""
+          },
+          {
+            "name": "multi_step",
+            "type": {
+              "type_id": 7,
+              "capacity": 0,
+              "string_capacity": 0,
+              "nested_type_name": ""
+            },
+            "default_value": "0"
+          },
+          {
+            "name": "reset",
+            "type": {
+              "type_id": 1,
+              "capacity": 0,
+              "string_capacity": 0,
+              "nested_type_name": "ros_gz_interfaces/msg/WorldReset"
+            },
+            "default_value": ""
+          },
+          {
+            "name": "seed",
+            "type": {
+              "type_id": 7,
+              "capacity": 0,
+              "string_capacity": 0,
+              "nested_type_name": ""
+            },
+            "default_value": ""
+          },
+          {
+            "name": "run_to_sim_time",
+            "type": {
+              "type_id": 1,
+              "capacity": 0,
+              "string_capacity": 0,
+              "nested_type_name": "builtin_interfaces/msg/Time"
+            },
+            "default_value": ""
+          }
+        ]
+      },
+      {
+        "type_name": "ros_gz_interfaces/msg/WorldReset",
+        "fields": [
+          {
+            "name": "all",
+            "type": {
+              "type_id": 15,
+              "capacity": 0,
+              "string_capacity": 0,
+              "nested_type_name": ""
+            },
+            "default_value": "False"
+          },
+          {
+            "name": "time_only",
+            "type": {
+              "type_id": 15,
+              "capacity": 0,
+              "string_capacity": 0,
+              "nested_type_name": ""
+            },
+            "default_value": "False"
+          },
+          {
+            "name": "model_only",
+            "type": {
+              "type_id": 15,
+              "capacity": 0,
+              "string_capacity": 0,
+              "nested_type_name": ""
+            },
+            "default_value": "False"
+          }
+        ]
+      },
+      {
+        "type_name": "ros_gz_interfaces/srv/ControlWorld_Event",
+        "fields": [
+          {
+            "name": "info",
+            "type": {
+              "type_id": 1,
+              "capacity": 0,
+              "string_capacity": 0,
+              "nested_type_name": "service_msgs/msg/ServiceEventInfo"
+            },
+            "default_value": ""
+          },
+          {
+            "name": "request",
+            "type": {
+              "type_id": 97,
+              "capacity": 1,
+              "string_capacity": 0,
+              "nested_type_name": "ros_gz_interfaces/srv/ControlWorld_Request"
+            },
+            "default_value": ""
+          },
+          {
+            "name": "response",
+            "type": {
+              "type_id": 97,
+              "capacity": 1,
+              "string_capacity": 0,
+              "nested_type_name": "ros_gz_interfaces/srv/ControlWorld_Response"
+            },
+            "default_value": ""
+          }
+        ]
+      },
+      {
+        "type_name": "ros_gz_interfaces/srv/ControlWorld_Request",
+        "fields": [
+          {
+            "name": "world_control",
+            "type": {
+              "type_id": 1,
+              "capacity": 0,
+              "string_capacity": 0,
+              "nested_type_name": "ros_gz_interfaces/msg/WorldControl"
+            },
+            "default_value": ""
+          }
+        ]
+      },
+      {
+        "type_name": "ros_gz_interfaces/srv/ControlWorld_Response",
+        "fields": [
+          {
+            "name": "success",
+            "type": {
+              "type_id": 15,
+              "capacity": 0,
+              "string_capacity": 0,
+              "nested_type_name": ""
+            },
+            "default_value": ""
+          }
+        ]
+      },
+      {
+        "type_name": "service_msgs/msg/ServiceEventInfo",
+        "fields": [
+          {
+            "name": "event_type",
+            "type": {
+              "type_id": 3,
+              "capacity": 0,
+              "string_capacity": 0,
+              "nested_type_name": ""
+            },
+            "default_value": ""
+          },
+          {
+            "name": "stamp",
+            "type": {
+              "type_id": 1,
+              "capacity": 0,
+              "string_capacity": 0,
+              "nested_type_name": "builtin_interfaces/msg/Time"
+            },
+            "default_value": ""
+          },
+          {
+            "name": "client_gid",
+            "type": {
+              "type_id": 51,
+              "capacity": 16,
+              "string_capacity": 0,
+              "nested_type_name": ""
+            },
+            "default_value": ""
+          },
+          {
+            "name": "sequence_number",
+            "type": {
+              "type_id": 8,
+              "capacity": 0,
+              "string_capacity": 0,
+              "nested_type_name": ""
+            },
+            "default_value": ""
+          }
+        ]
+      }
+    ]
+  },
+  "type_hashes": [
+    {
+      "type_name": "ros_gz_interfaces/srv/ControlWorld",
+      "hash_string": "RIHS01_057cd1cd69ccd13a18dd304595e3cd31d57af3bbb69186c3e21577a6e5d5d282"
+    },
+    {
+      "type_name": "builtin_interfaces/msg/Time",
+      "hash_string": "RIHS01_b106235e25a4c5ed35098aa0a61a3ee9c9b18d197f398b0e4206cea9acf9c197"
+    },
+    {
+      "type_name": "ros_gz_interfaces/msg/WorldControl",
+      "hash_string": "RIHS01_5ab5d57c81967008a869636e532ec8b8a1afb1a7ddb38a38e92053d032dd2145"
+    },
+    {
+      "type_name": "ros_gz_interfaces/msg/WorldReset",
+      "hash_string": "RIHS01_3c89a38589db6e493cc132aa44b69ac7f49c9ffc0770f51883500da1f5b4275e"
+    },
+    {
+      "type_name": "ros_gz_interfaces/srv/ControlWorld_Event",
+      "hash_string": "RIHS01_8642c448f2d9ecdcc6b13016cf9db3f74ebc53a983681dadb51f9ee5c8c32b16"
+    },
+    {
+      "type_name": "ros_gz_interfaces/srv/ControlWorld_Request",
+      "hash_string": "RIHS01_966e36121ac784a9f0bbab683a4bff9a1d502682d1e781e4381b7d7b29699c34"
+    },
+    {
+      "type_name": "ros_gz_interfaces/srv/ControlWorld_Response",
+      "hash_string": "RIHS01_7e58bff99e11cf382aec95a108ff43097b8196a3747c6fd8e2485245ee1aeeb8"
+    },
+    {
+      "type_name": "service_msgs/msg/ServiceEventInfo",
+      "hash_string": "RIHS01_41bcbbe07a75c9b52bc96bfd5c24d7f0fc0a08c0cb7921b3373c5732345a6f45"
+    }
+  ]
+}
